@@ -15,12 +15,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package absaliks.leetcode;
+package absaliks.leetcode.romantoint;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RomanToInteger {
+public class RomanToIntegerHashMap implements RomanToInteger { // 31.19% - 138 ms
   private static final Map<Character, Integer> ROMANIAN_DIGITS;
   static {
     ROMANIAN_DIGITS = new HashMap<>(7);
@@ -33,7 +33,8 @@ public class RomanToInteger {
     ROMANIAN_DIGITS.put('M', 1000);
   }
 
-  public static int convert(String s) {
+  @Override
+  public int convert(String s) {
     int sum = 0, previousValue = 0;
     for (int i = s.length() - 1; i >= 0; i--) {
       int value = ROMANIAN_DIGITS.get(s.charAt(i));

@@ -23,7 +23,14 @@ import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
+import absaliks.leetcode.romantoint.RomanToInteger;
+import absaliks.leetcode.romantoint.RomanToIntegerHashMap;
+import absaliks.leetcode.romantoint.RomanToIntegerSwitch;
+
 class RomanToIntegerTest {
+
+  private RomanToInteger converter = new RomanToIntegerHashMap();
+
   @Test
   void testSingleDigitValue() {
     String[] romanDigits = {"I", "V", "X", "L", "C", "D", "M"};
@@ -69,7 +76,7 @@ class RomanToIntegerTest {
 
   @Test
   void loadTest() {
-    IntStream.of(100000).forEach((i) -> { // 11 - 13 ms
+    IntStream.of(100000).forEach((i) -> {
       assertRomanToInt(4, "IV");
       assertRomanToInt(58, "LVIII");
       assertRomanToInt(1994, "MCMXCIV");
@@ -78,7 +85,7 @@ class RomanToIntegerTest {
   }
 
   private void assertRomanToInt(int expectedOutput, String input) {
-    int actualValue = RomanToInteger.convert(input);
+    int actualValue = converter.convert(input);
     assertEquals(expectedOutput, actualValue,
         "Expected Value of " + input + " to be " + expectedOutput + ", but was " + actualValue);
   }

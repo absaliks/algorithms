@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package absaliks.leetcode;
+package absaliks.leetcode.romantoint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -11,8 +11,8 @@ class MergeTwoSortedListsTest {
 
   @Test
   void mergeListWithNull() {
-    ListNode list = createList(new int[]{1, 7, 9});
-    assertEquals("179", solution.mergeTwoLists(null, list).toString());
+    assertEquals("234", solution.mergeTwoLists(createList(new int[]{2, 3, 4}), null).toString());
+    assertEquals("179", solution.mergeTwoLists(null, createList(new int[]{1, 7, 9})).toString());
   }
 
   @Test

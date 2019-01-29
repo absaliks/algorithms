@@ -1,9 +1,9 @@
 package absaliks.leetcode;
 
-public class MergeTwoSortedLists {
+// Runtime: 7 ms, faster than 67.17% of Java online submissions for Merge Two Sorted Lists.
+class MergeTwoSortedLists {
 
-
-  public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+  ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     if (l1 == null) {
       return l2;
     }

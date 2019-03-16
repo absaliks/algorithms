@@ -21,9 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import absaliks.leetcode.romantoint.RomanToInteger;
-import absaliks.leetcode.romantoint.RomanToIntegerHashMap;
-
 class RomanToIntegerTest {
 
   private RomanToInteger converter = new RomanToIntegerHashMap();

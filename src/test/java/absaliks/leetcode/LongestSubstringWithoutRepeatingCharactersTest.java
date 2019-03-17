@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class LongestSubstringWithoutRepeatingCharactersTest {
 
   LongestSubstringWithoutRepeatingCharacters solution =
-      new LongestSubstringWithoutRepeatingCharacters2();
+      new LongestSubstringWithoutRepeatingCharacters();
 
   @Test
   void abcabcbb() {

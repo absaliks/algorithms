@@ -20,6 +20,7 @@ class MergeTwoSortedLists {
       l2 = l2.next;
     }
     ListNode tail = head;
+    tail.hashCode();
     do {
       if (l1 == null) {
         tail.next = l2;

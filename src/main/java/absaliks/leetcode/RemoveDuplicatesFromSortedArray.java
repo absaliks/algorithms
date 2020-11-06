@@ -5,23 +5,18 @@ package absaliks.leetcode;
  */
 public class RemoveDuplicatesFromSortedArray {
   public int removeDuplicates(int[] nums) {
-    if (nums == null) {
-      return 0;
-    }
-    if (nums.length < 2) {
-      return 1;
-    }
-    int seekingCursor = 2;
-    final int maxI = nums.length - 1;
-    for (int i = 1; i < maxI; i++) {
-      final int nextI = i + 1;
-      final int nextValue = nums[nextI];
-      if (nums[i] == nextValue) {
-        for (int j = nextI; j < nums.length; j++) {
-
+        if (nums.length < 2) {
+          return nums.length;
         }
-      }
-    }
-    return 0;
+        short writeCursor = 0;
+        int wValue = nums[0];
+        for (short readCursor = 1; readCursor < nums.length; readCursor++) {
+          final int rValue = nums[readCursor];
+          if (wValue < rValue) {
+            nums[++writeCursor] = rValue;
+            wValue = rValue;
+          }
+        }
+        return writeCursor + 1;
   }
 }

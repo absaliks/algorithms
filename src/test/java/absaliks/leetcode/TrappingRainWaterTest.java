@@ -22,7 +22,7 @@ public class TrappingRainWaterTest {
 
         int waterAmount = 0;
         int wellIndex = 0;
-        for (int cursor = 0; cursor <= maxElevationIndex; cursor++) {
+        for (int cursor = 0; cursor < maxElevationIndex; cursor++) {
             int wellElevation = height[wellIndex];
             int currentHeight = height[cursor];
 
@@ -34,7 +34,7 @@ public class TrappingRainWaterTest {
         }
 
         wellIndex = height.length - 1;
-        for (int cursor = height.length - 2; cursor >= maxElevationIndex; cursor--) {
+        for (int cursor = height.length - 2; cursor > maxElevationIndex; cursor--) {
             int wellElevation = height[wellIndex];
             int currentHeight = height[cursor];
 

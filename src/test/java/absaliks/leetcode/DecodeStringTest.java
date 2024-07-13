@@ -40,30 +40,20 @@ public class DecodeStringTest {
 
         private void expand() {
             int multiplier = 0;
-            Token token = Token.MULTIPLIER;
-            final int readCursorStartIndex = readCursor;
             final int writeCursorStartIndex = builder.length();
-            while (readCursor < source.length()) {
-                char chr = source.charAt(readCursor);
-                if (token == Token.MULTIPLIER && chr == '[') {
-                    multiplier = Integer.parseInt(source, readCursorStartIndex, readCursor, 10);
-                    token = Token.ARGUMENT;
-                } else if (token == Token.ARGUMENT) {
-                    if (chr == ']') {
-                        repeat(writeCursorStartIndex, builder.length(), multiplier - 1);
-                        return;
-                    } else if (Character.isDigit(chr)) {
-                        expand();
-                    } else {
-                        builder.append(chr);
-                    }
-                }
+            char chr;
+
+            while ((chr = source.charAt(readCursor++)) != '[')
+                multiplier = multiplier * 10 + chr - '0';
+
+            while ((chr = source.charAt(readCursor)) != ']') {
+                if (Character.isDigit(chr))
+                    expand();
+                else
+                    builder.append(chr);
                 readCursor++;
             }
-        }
-
-        enum Token {
-            NONE, MULTIPLIER, ARGUMENT
+            repeat(writeCursorStartIndex, builder.length(), multiplier - 1);
         }
 
         private void repeat(int startIndex, int endIndex, int times) {

@@ -7,13 +7,6 @@ import org.junit.jupiter.api.Test;
 // https://leetcode.com/problems/same-tree/
 public class SameTreeTest {
 
-  private record TreeNode(int val, TreeNode left, TreeNode right) {
-
-    public static TreeNode of(Integer value) {
-      return value != null ? new TreeNode(value, null, null) : null;
-    }
-  }
-
   private static boolean isSameTree(TreeNode p, TreeNode q) {
     if (p == null && q == null) {
       return true;

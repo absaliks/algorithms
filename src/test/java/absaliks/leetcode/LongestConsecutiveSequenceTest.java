@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 // https://leetcode.com/problems/longest-consecutive-sequence
 // CPU 31ms | Beats 52.19%
-// RAM 61.22MB | Beats 64.78%
+// RAM 60.87MB | Beats 67.22%
 public class LongestConsecutiveSequenceTest {
 
     public int longestConsecutive(int... nums) {
@@ -19,14 +19,8 @@ public class LongestConsecutiveSequenceTest {
         int result = 0;
         for (int num : nums) {
             int streak = 1;
-            for (int left = num - 1; set.contains(left); left--) {
-                set.remove(left);
-                streak++;
-            }
-            for (int right = num + 1; set.contains(right); right++) {
-                set.remove(right);
-                streak++;
-            }
+            for (int left = num - 1; set.remove(left); left--) streak++;
+            for (int right = num + 1; set.remove(right); right++) streak++;
             result = Math.max(result, streak);
         }
         return result;

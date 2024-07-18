@@ -34,6 +34,6 @@ public class SameTreeTest {
   }
 
   private static TreeNode tree(int root, Integer left, Integer right) {
-    return new TreeNode(root, TreeNode.of(left), TreeNode.of(right));
+    return new TreeNode(root, new TreeNode(left), new TreeNode(right));
   }
 }

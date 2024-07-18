@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 // https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree
+// CPU: 4ms - Beats 96.87%
+// RAM: 54.78MB - Beats 58.96%
 public class LongestZigZagPathInBinaryTreeTest {
     public int longestZigZag(TreeNode root) {
         return longestZigZag(root, 0, 0);
@@ -39,7 +41,7 @@ public class LongestZigZagPathInBinaryTreeTest {
     }
 
     private static TreeNode tree(int root, Integer left, Integer right) {
-        return new TreeNode(root, TreeNode.of(left), TreeNode.of(right));
+        return new TreeNode(root, new TreeNode(left), new TreeNode(right));
     }
 
     private static TreeNode tree(int root, TreeNode left, TreeNode right) {

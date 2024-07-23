@@ -10,18 +10,18 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 // Single Number II - https://leetcode.com/problems/single-number-ii
-// CPU 5ms | Beats 37.58%
-// RAM 45.51MB | Beats 20.19%
+// CPU 4ms | Beats 54.82%
+// RAM 45.36MB | Beats 40.90%
 public class SingleNumber2Test {
 
     public static int singleNumber(int... nums) {
         var map = new HashMap<Integer, Integer>(nums.length / 3 + 1);
         for (int num : nums) {
-            var count = map.getOrDefault(num, 0) + 1;
+            var count = map.getOrDefault(num, 0);
             if (count == 3) {
                 map.remove(num);
             } else {
-                map.put(num, count);
+                map.put(num, count + 1);
             }
         }
         return map.keySet().iterator().next();

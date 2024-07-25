@@ -2,13 +2,12 @@ package absaliks.leetcode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 // https://leetcode.com/problems/integer-to-roman
 // CPU 3ms | Beats 97.79%
-// RAM 43.99MB | Beats 91.04%
+// RAM 44.34MB | Beats 51.74%
 public class IntegerToRomanTest {
 
     private static final char[][] charDictionary = { { 'I', 'V' }, { 'X', 'L' }, { 'C', 'D' }, { 'M' } };
@@ -16,35 +15,22 @@ public class IntegerToRomanTest {
 
     public String intToRoman(int num) {
         var builder = new StringBuilder();
-        int reminder = num;
-        if (num >= 1000) {
-            builder.repeat("M", num / 1000);
-            reminder = num % 1000;
-        }
-        while (reminder > 0) {
-            var dictIndex = dictionaryIndex(reminder);
-            var firstDigit = firstDigit(reminder);
+        while (num > 0) {
+            var dictIndex = dictionaryIndex(num);
+            var firstDigit = firstDigit(num);
             if (firstDigit == 9 || firstDigit == 4) {
                 builder.append(charDictionary[dictIndex][0]);
-                reminder += numDictionary[dictIndex][0];
-                if (firstDigit == 9) {
-                    builder.append(charDictionary[dictIndex + 1][0]);
-                    reminder -= numDictionary[dictIndex + 1][0];
-                } else {
-                    builder.append(charDictionary[dictIndex][1]);
-                    reminder -= numDictionary[dictIndex][1];
-                }
+                num += numDictionary[dictIndex][0];
             } else if (firstDigit < 4) {
-                var times = firstDigit;
-                builder.repeat(charDictionary[dictIndex][0], times);
-                reminder -= times * numDictionary[dictIndex][0];
+                builder.repeat(charDictionary[dictIndex][0], firstDigit);
+                num -= firstDigit * numDictionary[dictIndex][0];
             } else {
                 builder.append(charDictionary[dictIndex][1]);
-                reminder -= numDictionary[dictIndex][1];
+                num -= numDictionary[dictIndex][1];
                 if (firstDigit > 5) {
                     int times = firstDigit - 5;
                     builder.repeat(charDictionary[dictIndex][0], times);
-                    reminder -= times * numDictionary[dictIndex][0];
+                    num -= times * numDictionary[dictIndex][0];
                 }
             }
         }
@@ -58,18 +44,16 @@ public class IntegerToRomanTest {
         if (number < 100)
             return 1;
 
-        return 2;
+        if (number < 1000)
+            return 2;
+
+        return 3;
     }
 
     private int firstDigit(int i) {
         while (i > 9)
             i /= 10;
         return i;
-    }
-
-    @Test
-    void name() {
-        assertEquals("V", intToRoman(5));
     }
 
     @ParameterizedTest
@@ -83,6 +67,17 @@ public class IntegerToRomanTest {
             1000, M
             """)
     void romanDigits(int dec, String roman) {
+        assertEquals(roman, intToRoman(dec));
+    }
+
+    @ParameterizedTest
+    @CsvSource(textBlock = """
+               9, IX
+              99, XCIX
+             900, CM
+             999, CMXCIX
+            """)
+    void nines(int dec, String roman) {
         assertEquals(roman, intToRoman(dec));
     }
 

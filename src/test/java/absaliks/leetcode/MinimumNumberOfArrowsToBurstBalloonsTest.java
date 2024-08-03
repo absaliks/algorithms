@@ -2,7 +2,8 @@ package absaliks.leetcode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.BitSet;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -18,53 +19,34 @@ public class MinimumNumberOfArrowsToBurstBalloonsTest {
 
     // 40m + 14:03
     public int findMinArrowShots(int[][] points) {
-        if (points.length == 1) {
-            return 1;
+        if (points.length == 0) {
+            return 0;
         }
-        int result = 0;
-        var popped = new BitSet(points.length);
-        for (int outerCursor = 0; outerCursor < points.length; outerCursor++) {
-            if (popped.get(outerCursor)) {
+        Arrays.sort(points, Comparator.comparingInt(a -> a[1]));
+        int arrowPos = points[0][1];
+        int arrowCnt = 1;
+        for (int i = 1; i < points.length; i++) {
+            if (arrowPos >= points[i][0]) {
                 continue;
             }
-
-            result++;
-            popped.set(outerCursor);
-            var outerInterval = points[outerCursor];
-            var bestX = outerInterval[0];
-            var bestLethality = 1;
-            for (int x = outerInterval[0]; x <= outerInterval[1]; x++) {
-                int lethality = 1;
-                for (int innerIntervalCursor = outerCursor + 1; innerIntervalCursor < points.length; innerIntervalCursor++) {
-                    if (popped.get(innerIntervalCursor))
-                        continue;
-
-                    int[] candidate = points[innerIntervalCursor];
-                    if (isIn(x, candidate))
-                        lethality++;
-                }
-                if (lethality > bestLethality) {
-                    bestLethality = lethality;
-                    bestX = x;
-                }
-                if (x == Integer.MAX_VALUE) {
-                    break;
-                }
-            }
-
-            if (bestLethality > 1) {
-                for (int i = 0; i < points.length; i++) {
-                    if (popped.get(i))
-                        continue;
-
-                    int[] point = points[i];
-                    if (isIn(bestX, point))
-                        popped.set(i);
-                }
-            }
-            System.out.println("x=%d \t lethality=%d".formatted(bestX, bestLethality));
+            arrowCnt++;
+            arrowPos = points[i][1];
         }
-        return result;
+        return arrowCnt;
+    }
+
+
+    @Test
+    void triggerHappyConsequence_falseBait() {
+        // |12345|
+        // |  == |  — both x=3 and x=4 result in 2 balloons popped, however if you choose the first available X, then
+        // |==   |  the second and third balloons are going to be left separated, requiring 3 shots in total.
+        // |   ==|
+        // | ==  |
+        // | x x |  — the correct strategy is 2 + 4
+
+        var pts = points(3,4, 1,3, 4,5, 2,3);
+        assertEquals(2, findMinArrowShots(pts));
     }
 
     private static boolean isIn(int i, int[] interval) {
@@ -85,20 +67,6 @@ public class MinimumNumberOfArrowsToBurstBalloonsTest {
     @Test
     void triggerHappyConsequence_equalLethality() {
         var pts = points(3,4, 1,2, 4,5, 2,3);
-        assertEquals(2, findMinArrowShots(pts));
-    }
-
-
-    @Test
-    void triggerHappyConsequence_falseBait() {
-        // |12345|
-        // |  == |  — both x=3 and x=4 result in 2 balloons popped, however if you choose the first available X, then
-        // |==   |  the second and third balloons are going to be left separated, requiring 3 shots in total.
-        // |   ==|
-        // | ==  |
-        // | x x |  — the correct strategy is 2 + 4
-
-        var pts = points(3,4, 1,3, 4,5, 2,3);
         assertEquals(2, findMinArrowShots(pts));
     }
 
